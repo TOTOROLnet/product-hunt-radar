@@ -1,4 +1,4 @@
-name: Auto merge Cursor report branches
+name: Sync Cursor report to main
 
 on:
   push:
@@ -7,48 +7,50 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
-  auto-merge:
+  sync-report:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Cursor branch
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          path: cursor-src
 
-      - name: Create pull request
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main-repo
+
+      - name: Copy reports to main
+        run: |
+          mkdir -p main-repo/reports
+          cp -R cursor-src/reports/*.md main-repo/reports/ || true
+
+      - name: Commit and push to main
         env:
-          GH_TOKEN: ${{ github.token }}
           BRANCH: ${{ github.ref_name }}
         run: |
-          existing_pr=$(gh pr list \
-            --head "$BRANCH" \
-            --base main \
-            --state open \
-            --json number \
-            --jq '.[0].number')
+          cd main-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          if [ -z "$existing_pr" ]; then
-            gh pr create \
-              --base main \
-              --head "$BRANCH" \
-              --title "Auto report: $BRANCH" \
-              --body "Auto-generated Product Hunt report from Cursor Automation."
+          git add reports
+
+          if git diff --cached --quiet; then
+            echo "No report changes to commit."
+            exit 0
           fi
 
-      - name: Merge pull request
+          git commit -m "Add Product Hunt report from $BRANCH"
+          git push origin main
+
+      - name: Delete Cursor branch
         env:
-          GH_TOKEN: ${{ github.token }}
           BRANCH: ${{ github.ref_name }}
         run: |
-          pr_number=$(gh pr list \
-            --head "$BRANCH" \
-            --base main \
-            --state open \
-            --json number \
-            --jq '.[0].number')
-
-          if [ -n "$pr_number" ]; then
-            gh pr merge "$pr_number" --squash --delete-branch
-          fi
+          cd main-repo
+          git push origin --delete "$BRANCH" || true
