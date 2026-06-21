@@ -1,13 +1,27 @@
 # Product Hunt Radar Agent Instructions
 
-每次执行：
+本仓库用于每天生成 Product Hunt 新品监测报告。
 
-1. 运行 python3 scripts/fetch_producthunt.py
-2. 读取 data/latest.json
-3. 读取 config/focus.md
-4. 根据关注方向筛选 Product Hunt 新产品
-5. 对可能入选的产品，打开 Product Hunt 页面和官网核实
-6. 按 18 分制评分，只保留 >=11 分的产品
-7. 生成 reports/YYYY-MM-DD.md，日期使用北京时间
-8. 不要编造融资、用户量、技术实现或团队背景
-9. 如果没有高价值产品，写“今日无高价值新品”
+目标：产出给 AI 产品经理看的高密度决策简报，而不是产品大全。
+
+## 执行流程
+
+1. 运行 `python3 scripts/fetch_producthunt.py`
+2. 读取 `data/latest.json`
+3. 读取 `config/focus.md`
+4. 对 Product Hunt 新品做机制判断和初筛
+5. 对可能入选的产品，尽量核实官网、官方文档、GitHub、官方博客或其他官方来源
+6. 按评分规则筛选
+7. 生成 `reports/YYYY-MM-DD.md`，日期使用北京时间
+
+## 重要约束
+
+* 不要编造融资、用户量、票数、排名、团队背景或技术实现。
+* 不能核实的信息必须标注“未核实”。
+* 不要只做关键词匹配，要判断产品实际机制。
+* 不要把所有达标产品都长篇展开。
+* 正文只展开最值得关注的 1-3 个产品。
+* 其他达标产品只进入附录表格，最多 10 个。
+* 每个重点产品必须说明：解决什么瓶颈、为什么值得关注、失败风险、对 AI 产品的启发。
+* 报告正文控制在 1200-1800 中文字。
+* 宁可少报，不要凑数。
