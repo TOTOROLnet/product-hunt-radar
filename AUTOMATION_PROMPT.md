@@ -1,41 +1,45 @@
-每天执行一次 Product Hunt **Track A（B2B）** 监测。与 Track B（2C）是**独立 Agent 任务**；本任务**只写 partial**，合并由 CI（`auto-merge-cursor.yml`）在 main 上完成。
+每天执行一次 Product Hunt **AI 新品监测**，产出**一份**同时覆盖「技术向 / B2B / 基础设施 AI」与「2C 消费向 AI」两大板块的日报。
 
 执行步骤：
 
-1. 阅读 `AGENTS.md` 和 `config/focus.md`（不要读 `focus-2c.md`）。
+1. 阅读 `AGENTS.md` 和 `config/focus.md`。
 2. 运行 `python3 scripts/fetch_producthunt.py`。
-3. 读取 `data/latest.json`。
-4. RSS 失败时用浏览器榜单作备用，并在 partial 末尾的数据源节注明。
-5. 机制判断 + 官网核实；不编造票数、融资等。
-6. Track A 按 18 分制评分（见 `focus.md`）。
-7. 将 **Track A 全部正文**（从「今日一句话结论」到「已过滤产品摘要」，含数据源与限制）写入：
+3. 读取 `data/latest.json`（当天 raw 候选列表）。
+4. RSS 失败时用浏览器榜单作备用，并在报告末尾数据源节注明。
+5. 对**同一批候选**分别用板块 A（技术向）和板块 B（2C 消费向）两种视角各扫一遍：
+   * 先过第 0 节硬门槛：**只保留 AI 产品**，非 AI 产品剔除。
+   * 机制判断 + 官网核实；不编造票数、融资、排名、用户量。
+   * 板块 A、板块 B 各按 18 分制评分（见 `config/focus.md`）。
+6. **两个板块都必须给出当天结论**：某板块当天无达标产品时，明确写「今日无高价值 X 类新品」，不要留空、不要凑数、不要把 B2B 产品塞进 2C 板块。
+7. 按 `config/focus.md` 的「报告结构」把完整正文写入一份文件：
 
-   `reports/partials/b2b-YYYY-MM-DD.md`（北京时间日期）
+   `reports/YYYY-MM-DD.md`（北京时间日期）
 
-   **禁止**写入 `reports/YYYY-MM-DD.md`（合并文件由 CI 生成）。  
-   **禁止**写入 Track B 内容。**禁止**读取或修改 `reports/partials/consumer-*.md`。  
-   **不要**在本地运行 merge 脚本——合并只在 CI 的 main 上发生。
-
-8. 把改动提交到 Cursor 工作分支（`cursor/product-hunt-*`）并 push。  
-   CI 会同步 partial → 在 main 跑 `merge_daily_report.py --all` → 生成/更新 `reports/YYYY-MM-DD.md` → 删分支。
+8. 把改动提交到 Cursor 工作分支（`cursor/product-hunt-*`）并 push。
+   CI（`.github/workflows/auto-merge-cursor.yml`）会把该报告同步进 main 并删除 cursor 分支。
 9. **不要创建 Pull Request**（cursor 分支会被 CI 删除）。
-10. 最终回复：简版摘要 + partial 路径。
+10. 最终回复：简版摘要（技术向 + 2C 各一两句）+ 报告路径。
 
-Track A partial 结构（无需加 Track A 标题，合并脚本会自动包裹）：
+报告正文结构（见 `config/focus.md`，控制在 1800–2600 中文字）：
 
+```
 ## 今日一句话结论
 
-## 今天最值得关注的 1-3 个产品
-（每项含：定位、问题、机制、为何关注、失败风险、对混元 API/Agent 启发、评分、链接）
+## 板块 A：技术向 / B2B / 基础设施 AI
+### 今天最值得关注的 1-3 个 A 类产品
+### A 类趋势信号
+### 其他达到门槛的 A 类产品
 
-## 这些产品背后的趋势信号
+## 板块 B：2C 消费向 AI
+### 今天最值得关注的 1-3 个 B 类产品
+### B 类趋势信号
+### 其他达到门槛的 B 类产品
 
-## 我作为 AI 产品经理最想跟进的方向
-
-## 其他达到门槛的产品
+## 我最想跟进的方向
 
 ## 已过滤产品摘要
 
 ## 数据源与限制
+```
 
-Track A 正文 1200-1800 字。宁可少报，不要凑数。
+宁可少报，不要凑数；但技术向与 2C 两端每天都要覆盖到。
