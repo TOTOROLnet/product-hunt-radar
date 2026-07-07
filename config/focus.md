@@ -349,3 +349,8 @@
 * 它们为什么值得看？
 * 背后反映了什么 AI 产品趋势？
 * 哪个方向值得进一步体验、拆解或进入竞品库？
+
+
+---
+
+> **2C 消费监测**为独立 Agent 任务：配置见 `config/focus-2c.md`，partial 写入 `reports/partials/`，合并脚本 `scripts/merge_daily_report.py` 产出单一日报 `reports/YYYY-MM-DD.md`。不要在同一次 Automation 中加载 focus-2c.md。

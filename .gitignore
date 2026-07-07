@@ -1,3 +1,5 @@
 data/latest.json
 __pycache__/
 .DS_Store
+
+reports/partials/
