@@ -1,356 +1,212 @@
-# 监测目标
+# Product Hunt AI 雷达 — 监测目标与评分规则
 
-本文件用于定义 Product Hunt 新品监测的关注范围、降权范围和评分规则。
-
-目标不是收集所有 AI 产品，而是筛出对 AI 产品经理有启发的新产品、新交互、新基础设施和新工作流。
-
----
-
-## 我重点关注
-
-### 1. AI Agent 基础设施
-
-优先关注能让 Agent 更稳定、更可控、更可观测、更能生产化落地的产品。
-
-包括但不限于：
-
-* Tool Use
-* Function Calling
-* MCP
-* Remote MCP Server
-* API to MCP
-* Agent Runtime
-* Agent Sandbox
-* Agent Permission / Approval
-* Agent Memory
-* Agent State Management
-* Agent Observability
-* Agent Evaluation
-* Agent Guardrails
-* Agent Trace / Replay
-* Agent Workflow
-* Multi-agent Orchestration
-* Browser Use / Computer Use
-* Long-running Agent
-* Human-in-the-loop Agent
-
-重点判断：
-
-* 它是否解决 Agent 落地中的真实瓶颈？
-* 它是否让工具调用、权限、安全、记忆、状态、评估或追踪更容易产品化？
-* 它是否能迁移到大模型 API、Agent 平台或开发者工具产品中？
+本文件定义每天 Product Hunt 新品监测的**关注范围、过滤规则和评分标准**。
+每天产出**一份** `reports/YYYY-MM-DD.md`，在同一批候选里同时覆盖 AI 产品的两端：
+技术向（B2B / 基础设施）与 2C 消费向。
 
 ---
 
-### 2. Context Engineering / Memory / Skill 类产品
+## 0. 唯一硬门槛：必须是 AI 产品
 
-优先关注围绕上下文组织、记忆、技能沉淀、任务复用和经验迁移的产品。
-
-包括但不限于：
-
-* Context Engineering
-* Prompt / Context Management
-* Long Context Workflow
-* Memory Layer
-* Personal / Team / Project Memory
-* Skill / Skill Library
-* Skill Generation
-* Trace-to-Skill
-* Auto Skill Discovery
-* SkillOpt / SkillClaw / AutoSkill 类方向
-* Workflow-to-Skill
-* Task Replay / Task Generalization
-* Reusable Agent Capability
-* Knowledge-to-Action
-* SOP / Playbook for Agent
-
-重点判断：
-
-* 它是否把一次性任务沉淀成可复用能力？
-* 它是否能提升 Agent 在复杂任务中的稳定性和复用性？
-* 它是否代表 memory、skill、context 从“提示词技巧”走向“产品机制”？
+* 只监测 **AI 产品**：AI 是其核心能力或核心体验（AI-native），或 AI 显著重构了它的产品形态、交互或工作流。
+* 非 AI 产品一律不进正文，最多在「已过滤」里一句话带过。
+* 「只加了一个聊天框 / 纯 ChatGPT 套壳、无场景深耕」不算合格 AI 产品，降权。
+* 判断口径：如果把 AI 拿掉，这个产品就不成立或价值大幅缩水 → 是合格 AI 产品。
 
 ---
 
-### 3. 大模型 API 与开发者平台
+## 1. 一份报告，两大板块（都必须认真扫）
 
-优先关注对大模型 API、模型服务、开发者体验和 Agent 开发链路有启发的产品。
+同一批 Product Hunt 候选，用两种视角各扫一遍：
 
-包括但不限于：
+* **板块 A · 技术向 / B2B / 基础设施 AI**：面向 AI 产品经理、开发者、企业的产品。
+* **板块 B · 2C 消费向 AI**：面向个人消费者的 AI 应用。
 
-* LLM API Platform
-* AI Developer Platform
-* SDK / CLI / Workflow
-* Structured Output
-* File / Search / Retrieval
-* Web Search / Deep Research
-* RAG / Knowledge Base
-* Prompt Cache
-* Batch API / Async API
-* Model Routing
-* Model Evaluation
-* Cost / Latency / Reliability Observability
-* Playground / Debugger
-* Agent Builder
-* Tool Builder
-* API Gateway for AI
-
-重点判断：
-
-* 它是否改善开发者构建 AI 应用或 Agent 的链路？
-* 它是否在协议、工具、状态、上下文、评估、调试、成本或可靠性上有产品机制创新？
-* 它是否对混元 API、Responses API、Anthropic 兼容、工具调用或 Agent 平台设计有参考价值？
+**硬性要求：两个板块每天都要独立扫、独立给结论。** 不允许因为当天技术类产品多，
+就省略、敷衍 2C 板块；也不允许把 B2B 产品硬塞进 2C 板块凑数。
+某个板块当天确实没有达标产品时，**明确写「今日无高价值 X 类新品」**，而不是留空或凑数。
 
 ---
 
-### 4. Coding Agent / Developer Tools
+## 板块 A：技术向 / B2B / 基础设施 AI
 
-优先关注软件开发、代码生成、代码审查、测试、部署、工程协作相关的 AI 原生工具。
+目标：筛出对 AI 产品经理、开发者有启发的新产品、新交互、新基础设施、新工作流。
 
-包括但不限于：
+### 重点关注方向
 
-* Coding Agent
-* Code Review Agent
-* CI Repair Agent
-* Test Generation
-* Debugging Agent
-* Repo Understanding
-* PR Review / PR Summary
-* Dev Environment for Agents
-* Terminal / Browser / IDE Agent
-* Documentation Agent
-* API / SDK Generation
-* DevOps Agent
-* Security Agent
-* Penetration Testing Agent
-* Agentic IDE / Workspace
+1. **AI Agent 基础设施**
+   Tool Use、Function Calling、MCP、Remote MCP Server、Agent Runtime / Sandbox、
+   Agent Permission / Approval、Memory、State、Observability、Evaluation、Guardrails、
+   Trace / Replay、Multi-agent Orchestration、Browser / Computer Use、Human-in-the-loop。
+   判断：是否解决 Agent 落地的真实瓶颈？能否迁移到大模型 API / Agent 平台 / 开发者工具？
 
-重点判断：
+2. **Context Engineering / Memory / Skill 类**
+   Context 管理、Memory Layer、Skill Library、Trace-to-Skill、Workflow-to-Skill、
+   Task Replay、可复用 Agent 能力、SOP / Playbook for Agent。
+   判断：是否把一次性任务沉淀成可复用能力？是否让 memory/skill/context 从「提示词技巧」走向「产品机制」？
 
-* 它是否改变开发者工作流，而不只是“生成一段代码”？
-* 它是否让 Agent 能在真实工程环境中读仓库、跑命令、看日志、改代码、验证结果？
-* 它是否体现 coding agent 从辅助问答走向工程执行？
+3. **大模型 API 与开发者平台**
+   LLM API 平台、AI 开发者平台、SDK / CLI、Structured Output、Retrieval / RAG、
+   Web Search / Deep Research、Model Routing / Evaluation、Playground / Debugger、
+   Agent Builder、AI 网关。
+   判断：是否改善构建 AI 应用 / Agent 的链路？在协议、工具、状态、评估、成本、可靠性上有无机制创新？
 
----
+4. **Coding Agent / Developer Tools**
+   Coding Agent、Code Review / CI Repair / Test Gen / Debugging Agent、Repo 理解、
+   PR Review、面向 Agent 的开发环境、Terminal / Browser / IDE Agent、DevOps / Security Agent。
+   判断：是否改变开发者工作流，而不只是「生成一段代码」？
 
-### 5. AI 原生生产力工具
+5. **AI 原生生产力工具**
+   AI-native Workspace / Inbox / Calendar / Docs / Meeting / Research、Personal / Team Assistant、
+   Proactive Agent、跨 App 工作流、Desktop / Voice Agent。
+   判断：是否重构了任务流、协作流、审批流，而不是「旧产品加个 Chatbot」？
 
-优先关注不是简单接入 AI，而是围绕 AI 重新设计工作流、协作方式和任务完成方式的生产力产品。
+6. **新型人机交互（面向专业 / 生产场景）**
+   Agentic UI、Human Approval / Takeover、Copilot→Operator、Desktop / Browser Control、
+   Interactive Document / Canvas、Agent Timeline / Trace UI。
+   判断：是否提供新的 AI 交互范式，让用户更好理解、控制、接管、追踪 Agent？
 
-包括但不限于：
+7. **垂直 Agent 工作流**
+   Research / Data / Analyst / Sales / Support / Design / Security / Finance / Legal /
+   Healthcare / E-commerce Agent。
+   判断：是否有明确专业对象、专业工具、专业验证标准？是否接入真实业务系统而非只给建议？
 
-* AI-native Workspace
-* AI-native Inbox
-* AI-native Calendar
-* AI-native Docs
-* AI-native Slides
-* AI-native Spreadsheet
-* AI-native Research
-* AI-native Meeting
-* AI-native Knowledge Work
-* Personal Assistant
-* Team Assistant
-* Proactive Agent
-* Approval-based Automation
-* Cross-app Workflow
-* Desktop Agent
-* Voice Agent
-* Work OS with AI
+8. **底层能力型创新 AI 应用（面向从业者）**
+   可能改变模型应用开发方式的新底层能力、新工作流入口、新组织/个人知识管理机制。
 
-重点判断：
+### 板块 A 评分（18 分）
 
-* 它是否不是“在旧产品里加一个 Chatbot”，而是重构了任务流？
-* 它是否有主动发现问题、准备材料、生成草稿、跨工具执行、等待人类确认的机制？
-* 它是否体现 AI 原生生产力从“提效工具”走向“任务代理”？
+1. **相关度 0–5**：是否贴合 AI Agent / 大模型 API / Context / Memory / MCP / Tool Use /
+   AI 原生生产力 / Coding Agent / Developer Tools / Skill 等方向。
+2. **产品机制新颖度 0–5**：是否有新机制、新工作流、新架构，而非包装概念。
+3. **对 AI 产品设计的启发 0–5**：能否启发 API / Agent 产品 / 上下文工程 / 工具调用 /
+   记忆 / 技能 / 评估 / 开发者平台 / AI 应用设计。
+4. **市场信号 0–3**：是否有明确用户场景、可信官方来源、开源活跃度、生态势能、可观察的早期 traction。
 
----
+**门槛**：≥ 11 分进附录；正文只展开最值得关注的 1–3 个。
 
-### 6. 新型人机交互
-
-优先关注能改变人与 AI 互动方式的产品。
-
-包括但不限于：
-
-* Conversational UI
-* Proactive UI
-* Agentic UI
-* Human Approval / Takeover
-* Co-pilot to Operator
-* Voice Interaction
-* Multimodal Interaction
-* Desktop Control
-* Browser Control
-* Interactive Video
-* Interactive Document
-* AI Artifact
-* Canvas / Workspace Agent
-* Ambient AI
-* Second Cursor / AI Cursor
-* Agent Timeline / Trace UI
-
-重点判断：
-
-* 它是否提供了新的 AI 交互范式？
-* 它是否让用户能更好地理解、控制、接管或追踪 Agent？
-* 它是否降低了复杂任务中用户与 Agent 协作的摩擦？
-
----
-
-### 7. 垂直 Agent 工作流
-
-优先关注将 Agent 深入具体专业场景，而不是泛泛聊天的产品。
-
-包括但不限于：
-
-* Research Agent
-* Data Agent
-* Analyst Agent
-* Marketing Agent
-* Sales Agent
-* Customer Support Agent
-* Design Agent
-* CAD Agent
-* Creative Agent
-* Security Agent
-* Finance Agent
-* Legal Agent
-* Healthcare Workflow Agent
-* E-commerce Ops Agent
-* Enterprise Workflow Agent
-
-重点判断：
-
-* 它是否有明确的专业对象、专业工具和专业验证标准？
-* 它是否把 Agent 接入了真实业务系统，而不只是生成建议？
-* 它是否具备可追踪、可审核、可回放、可纠错的工作流机制？
-
----
-
-### 8. 创新 AI 应用
-
-关注不一定属于 Agent 基础设施，但在产品形态、交互方式、商业场景或用户心智上有明显新意的 AI 应用。
-
-包括但不限于：
-
-* 新型 AI 消费应用
-* 新型内容交互
-* 新型教育 / 学习产品
-* 新型创作工具
-* 新型社交 / 陪伴 / 协作方式
-* 新型搜索 / 发现 / 推荐方式
-* 新型组织知识管理
-* 新型个人知识管理
-* 新型 AI 硬件 / 端侧 AI 体验
-* 新型 AI 工作流入口
-
-重点判断：
-
-* 它是否让用户用 AI 完成了过去难以完成的任务？
-* 它是否形成了新的使用场景、交互习惯或产品入口？
-* 它是否可能启发 Agent、AI 应用或大模型 API 的产品设计？
-
----
-
-## 降权或过滤
-
-以下产品通常不进入正文，除非有非常明确的机制创新：
-
-* 普通 ChatGPT wrapper
-* 只有一个聊天框的通用 AI 助手
-* 单点文案生成工具
-* 单点图片生成、头像生成、滤镜工具
-* 普通待办、笔记、日历、邮箱增强
-* 普通浏览器插件
-* 普通网站生成器
-* 普通营销增长工具
-* 纯 SEO / backlink / 广告投放工具
-* Crypto / NFT / Web3 概念包装
-* 纯娱乐或低频玩具型产品
-* 只有落地页，没有可核实机制
-* 只是接入 AI，但没有新的工作流、交互或基础设施机制
-* 明显缺少产品完成度、可信来源或可验证信息的项目
-
-注意：
-
-* “AI 原生生产力工具”不要因为属于邮箱、日历、文档、会议、浏览器等常见品类就直接过滤。
-* 只有当它只是旧工具加 AI 文案功能时才降权。
-* 如果它重构了任务流、协作流、审批流、上下文流或跨工具执行流，应进入重点评估。
-
----
-
-## 评分规则
-
-总分 18 分：
-
-1. 相关度：0-5
-   是否贴合 AI Agent、大模型 API、Context Engineering、Memory、MCP、Tool Use、AI 原生生产力、Coding Agent、Developer Tools、Skill 类方向或创新 AI 应用。
-
-2. 产品机制新颖度：0-5
-   是否有新的机制、工作流、交互方式、系统架构或产品组织方式，而不只是包装概念。
-
-3. 对 AI 产品设计的启发：0-5
-   是否能启发 API、Agent 产品、上下文工程、工具调用、记忆、技能、评估、开发者平台或 AI 应用设计。
-
-4. 市场信号：0-3
-   是否有明确用户场景、可信官方来源、开源活跃度、生态势能、品牌背书、社区讨论或可观察的早期 traction。
-
----
-
-## 正文展开标准
-
-报告正文只展开最值得关注的 1-3 个产品。
-
-其他达到 11 分的产品只进入附录表格，最多 10 个。
-
-如果当天没有明显高价值产品，可以不强行推荐。
-
-宁可少报，不要凑数。
-
----
-
-## 每个重点产品必须回答
+### 每个 A 类重点产品必须回答
 
 1. 它解决 Agent / AI 产品落地里的哪个真实瓶颈？
-2. 它的核心机制是什么？
-3. 它为什么现在值得关注？
-4. 它如果失败，最可能失败在哪里？
-5. 它对混元 API / Agent 产品 / AI 应用设计有什么迁移价值？
-6. 它代表的是短期噱头，还是长期产品结构变化？
+2. 核心机制是什么？
+3. 为什么现在值得关注？
+4. 如果失败，最可能输在哪里？
+5. 对混元 API / Agent 产品 / AI 应用设计有什么迁移价值？
+6. 是短期噱头，还是长期产品结构变化？
+
+---
+
+## 板块 B：2C 消费向 AI
+
+目标：从每日新品里筛出对**消费级 AI 产品创业**有启发的方向——用户是谁、痛点是否真实、
+能否形成留存与付费。同样受第 0 节硬门槛约束：**必须是 AI 为核心的消费产品**，
+普通消费 App「加点 AI 文案」不算。
+
+### 重点关注方向（均须 AI 为核心）
+
+1. **个人 AI 助理（消费向）**：面向个人的任务代理、生活助理、跨 App 自动化；
+   语音 / 移动 / 桌面消费入口；个人记忆、偏好、proactive 提醒。
+   判断：用户愿意把日常决策交给它吗？高频场景是什么？
+
+2. **AI 教育 / 学习**：AI 导师、自适应学习、练习与反馈闭环（语言、技能、考试、儿童/成人）。
+   判断：学习效果是否可感知？否则易沦为内容生成器。
+
+3. **AI 健康 / 运动 / wellness**：个性化计划、行为改变、结合可穿戴/健康数据、
+   心理健康、冥想、习惯养成。判断：是否有持续使用动机与信任机制？
+
+4. **AI 社交 / 陪伴 / 社区**：AI 陪伴、角色互动、兴趣社区里的 AI 能力、消费级多人协作 AI。
+   判断：差异化在哪？如何避免纯套壳？
+
+5. **AI 创作与内容消费**：消费级创作工具（视频、音乐、故事、UGC）、
+   新型内容发现 / 互动叙事 / 个性化 feed。判断：产出是否值得分享？是否形成创作—分发闭环？
+
+6. **AI 生活方式 / 旅行 / 计划 / 消费决策**：旅行规划、本地生活、消费决策助手、
+   订阅 / 个人财务消费向助手。判断：是否比通用聊天更能完成任务？留存来自哪里？
+
+7. **消费级 AI 娱乐与端侧硬件**：游戏化 AI、互动娱乐、新颖玩法、端侧 / 硬件消费体验。
+   判断：乐趣是否可持续，还是一次性噱头？
+
+### 板块 B 评分（18 分）
+
+1. **用户痛点 0–5**：痛点是否具体、高频、消费者是否愿为解决它付费或付出时间。
+2. **产品 / 交互新意 0–5**：机制、交互或场景组合是否有新意，而非提示词包装。
+3. **2C 机会价值 0–5**：分发路径是否可信、留存假设是否成立、商业模式是否说得通（订阅 / 交易 / 增值）。
+4. **市场信号 0–3**：官方信息完整度、产品完成度、可观察的早期 traction（不编造票数 / 融资）。
+
+**门槛**：≥ 11 分进附录；正文只展开最值得关注的 1–3 个。
+
+### 每个 B 类重点产品必须回答
+
+谁在用、痛什么、凭什么留下来、怎么获客、最可能死在哪。
+（**不要**写「对混元 API 的启发」——那是板块 A 的职责。）
+
+---
+
+## 通用降权或过滤（两个板块都适用）
+
+以下通常不进正文，除非有非常明确的机制创新：
+
+* 非 AI 产品（本雷达只看 AI）。
+* 纯 ChatGPT / 大模型套壳，无场景深耕。
+* 单点文案 / 图片 / 头像 / 滤镜生成，无留存。
+* 普通待办 / 笔记 / 日历 / 邮箱增强里只加了 AI 文案（若**重构了任务流**则正常评估，不要因品类直接过滤）。
+* 普通浏览器插件、网站生成器、营销 / SEO / 增长黑客工具。
+* Crypto / NFT / Web3 概念包装。
+* 只有落地页、没有可核实机制的项目。
+
+---
+
+## 报告结构（正文模板）
+
+正文用两个板块组织，控制在 1800–2600 中文字：
+
+```
+## 今日一句话结论
+（一句话概括今天技术向 + 2C 两端最重要的信号）
+
+## 板块 A：技术向 / B2B / 基础设施 AI
+
+### 今天最值得关注的 1-3 个 A 类产品
+（每项：定位、真实问题、核心机制、为何关注、失败风险、对混元 API/Agent 启发、评分、链接）
+
+### A 类趋势信号
+
+### 其他达到门槛的 A 类产品（附录表格，最多 10 个）
+
+## 板块 B：2C 消费向 AI
+
+### 今天最值得关注的 1-3 个 B 类产品
+（每项：定位、目标用户、痛点、机制/交互、分发留存假设、失败风险、评分、链接）
+
+### B 类趋势信号
+
+### 其他达到门槛的 B 类产品（附录表格，最多 5 个）
+
+## 我最想跟进的方向
+（技术向 + 2C 各可给一条）
+
+## 已过滤产品摘要
+
+## 数据源与限制
+```
 
 ---
 
 ## 趋势判断规则
 
-趋势不是关键词堆叠，必须满足至少一个条件：
+趋势不是关键词堆叠，每条至少满足一个条件：
 
-1. 至少 2 个产品体现了相同方向。
-2. 某个产品代表了大平台、重要生态或关键基础设施变化。
-3. 某个产品体现了 AI 产品形态的明显结构性变化。
+1. 至少 2 个产品体现相同方向。
+2. 某产品代表大平台 / 重要生态 / 关键基础设施变化。
+3. 某产品体现 AI 产品形态的明显结构性变化。
 
-趋势输出最多 3 条。
-
-如果没有明显趋势，写“今日未形成明确趋势信号”。
+每个板块的趋势各最多 3 条；无明显趋势就写「今日未形成明确趋势信号」。
 
 ---
 
 ## 输出偏好
 
-报告要面向 AI 产品经理，而不是面向普通消费者。
-
-优先输出判断，不要堆砌产品介绍。
-
-正文控制在 1200-1800 中文字。
-
-不要为了显得全面列太多产品。
-
-报告应该帮助读者快速决定：
-
-* 今天哪些产品值得看？
-* 它们为什么值得看？
-* 背后反映了什么 AI 产品趋势？
-* 哪个方向值得进一步体验、拆解或进入竞品库？
-
-
----
-
-> **2C 消费监测**为独立 Agent 任务：配置见 `config/focus-2c.md`，partial 写入 `reports/partials/`，合并脚本 `scripts/merge_daily_report.py` 产出单一日报 `reports/YYYY-MM-DD.md`。不要在同一次 Automation 中加载 focus-2c.md。
+* 优先输出判断，不要堆砌产品介绍。
+* 不编造票数、排名、融资、用户量、团队背景。
+* 宁可少报，不要凑数——但**两个板块都必须给出当天结论**（哪怕是「今日无高价值 2C 新品」）。
+* 报告应帮助读者快速决定：今天技术向和消费向各有哪些产品值得看、为什么、背后是什么趋势。
